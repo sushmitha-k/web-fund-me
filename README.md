@@ -1,167 +1,167 @@
-# html-fund-me-cu
+# 🚀 HTML Fund Me dApp
 
-*[⭐️ (2:37:02) | Lesson 8: HTML Fund Me](https://www.youtube.com/watch?v=sas02qSFZ74&t=9422s)*
+A simple frontend dApp that allows users to connect their wallet and interact with a **FundMe smart contract** (fund, withdraw, check balance).
 
-This is a minimalistic example what you can find in the [metamask docs](https://docs.metamask.io/guide/create-dapp.html#basic-action-part-1).
+This project is part of learning Web3 fundamentals — connecting frontend → wallet → smart contract.
 
-- [html-fund-me-cu](#html-fund-me-cu)
-- [Requirements](#requirements)
-    - [Optional Gitpod](#optional-gitpod)
-- [Quickstart](#quickstart)
-  - [Execute a transaction - Local EVM](#execute-a-transaction---local-evm)
-  - [Execute a transaction - zkSync](#execute-a-transaction---zksync)
-- [Thank you!](#thank-you)
+---
 
+## ⚡ Quickstart
 
-# Requirements
-
-- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-  - You'll know you've installed it right if you can run:
-    - `git --version`
-- [Metamask](https://metamask.io/)
-  - This is a browser extension that lets you interact with the blockchain.
-
-### Optional Gitpod
-
-If you can't or don't want to run and install locally, you can work with this repo in Gitpod. If you do this, you can skip the `clone this repo` part.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#github.com/PatrickAlphaC/html-fund-me-cu)
-
-# Quickstart 
-
-1. Clone the repo
-
-```
+### 1. Clone the repo
+```bash
 git clone https://github.com/Cyfrin/html-fund-me-cu
 cd html-fund-me-cu
 ```
 
-2. Run the `index.html` file
+### 2. Run the app
+- Open `index.html` directly in your browser  
+OR
+- Use VSCode Live Server extension (ritwickdey.LiveServer)
 
-You can usually just double click the file to "run it in the browser". Or you can right click the file in your VSCode and run "open with live server" if you have the live server VSCode extension (ritwickdey.LiveServer).
+👉 You should see a **“Connect”** button
 
-And you should see a small button that says "connect".
+---
 
-![Connect](connect.png)
+## 🔌 Connect Wallet
 
-Hit it, and you should see metamask pop up.
+- Click **Connect**
+- Approve connection in MetaMask
 
-## Execute a transaction - Local EVM
+---
 
-If you want to execute a transaction follow this, you'll need to setup a chain. We have support for both foundry and moccasin. 
+## 💻 Execute Transactions (Local EVM)
 
-> Foundry
+To interact with the contract (fund, withdraw), you need to deploy a smart contract locally.
 
-1. You'll need to open up a second terminal and run:
+---
 
-```
+# 🧱 Option 1: Foundry Setup
+
+### Step 1: Clone backend repo
+```bash
 git clone https://github.com/Cyfrin/foundry-fund-me-cu
 cd foundry-fund-me-cu
+```
+
+### Step 2: Build + start local chain
+```bash
 make build
 make anvil
 ```
 
-Then, in a second terminal
-```
+### Step 3: Deploy contract (new terminal)
+```bash
 make deploy
 ```
 
-> Moccasin
+---
 
-Or, if you use [moccasin](https://github.com/Cyfrin/moccasin), you can run 
-```
+# ☕ Option 2: Moccasin Setup
+
+### Step 1: Clone repo
+```bash
 git clone https://github.com/Cyfrin/buy-me-a-coffee-cu
 cd buy-me-a-coffee-cu
+```
+
+### Step 2: Start local chain
+```bash
 anvil
 ```
 
-Then, in a second terminal
-```
+### Step 3: Deploy contract (new terminal)
+```bash
 mox run deploy --network anvil
 ```
 
-This will deploy a sample contract and start a local hardhat blockchain. 
+---
 
-After you've deployed with either foundry or moccasin, you can should then:
+## 🔧 Configure Frontend
 
-2. Update your `constants.js` with the new contract address.
+### 1. Update contract address
 
-In your `constants.js` file, update the variable `contractAddress` with the address of the deployed "FundMe" contract. You'll see it near the top of the hardhat output.
-
-3. Connect your [metamask](https://metamask.io/) to your local hardhat blockchain.
-
-> **PLEASE USE A METAMASK ACCOUNT THAT ISNT ASSOCIATED WITH ANY REAL MONEY.**
-> I usually use a few different browser profiles to separate my metamasks easily.
-
-In the output of the above command, take one of the private key accounts and [import it into your metamask.](https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-Account)
-
-Additionally, add your localhost with chainid 31337 to your metamask.
-
-4. Refresh the front end, input an amount in the text box, and hit `fund` button after connecting
-
-## Execute a transaction - zkSync
-
-If you want to execute a transaction follow this:
-
-> Foundry
-
-1. Open up the `foundry-fund-me-f23` repo, and run a local zkSync node.
-
-> [!IMPORTANT]  
-> Be sure to go to the repo and follow the install/requirements instructions. The zkSync environment has different requirements to deploy/setup/etc.
-
-```
-git clone https://github.com/Cyfrin/foundry-fund-me-f23
-cd foundry-fund-me-f23
-make zkbuild
-npx zksync-cli dev start
+In `constants.js`:
+```js
+export const contractAddress = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
 ```
 
-This will setup a docker instance of a local zkSync node. 
+👉 Copy this address from deployment output
 
-Then, run:
+---
+
+### 2. Setup MetaMask
+
+⚠️ IMPORTANT: Use a test account only
+
+- Import one of the private keys from Anvil output  
+- Add a custom network:
+
+| Field | Value |
+|------|------|
+| Network Name | Localhost |
+| RPC URL | http://127.0.0.1:8545 |
+| Chain ID | 31337 |
+| Currency | ETH |
+
+---
+
+## ▶️ Run the App
+
+1. Refresh browser  
+2. Click **Connect**  
+3. Enter ETH amount  
+4. Click **Fund**  
+
+---
+
+## 🧠 Features
+
+- Connect wallet (MetaMask)  
+- Fund contract with ETH  
+- Withdraw funds (owner)  
+- Get contract balance  
+
+---
+
+## ⚠️ Notes
+
+- Always use test accounts  
+- Never use wallets with real funds  
+- Ensure MetaMask is connected to localhost (chainId 31337)  
+
+---
+
+## 📁 Project Structure
+
 ```
-make deploy-zk
+├── index.html        # UI
+├── index.js          # Web3 logic
+├── constants.js      # Contract address & ABI
 ```
 
-This will deploy a sample contract and start a local zkSync node.
+---
 
-> Moccasin
+## 🎯 Learning Goals
 
-Or, if you use [moccasin](https://github.com/Cyfrin/moccasin), you can run 
-```
-git clone https://github.com/Cyfrin/buy-me-a-coffee-cu
-cd buy-me-a-coffee-cu
-anvil-zksync
-```
+- Wallet connection (MetaMask)  
+- Smart contract interaction (ethers.js)  
+- Local blockchain setup (Anvil)  
+- Frontend → blockchain integration  
 
-Then, in a second terminal
-```
-just deploy-zk
-```
+---
 
-1. Update your `constants.js` with the new contract address.
+## 🙌 Acknowledgements
 
-In your `constants.js` file, update the variable `contractAddress` with the address of the deployed "FundMe" contract. You'll see it after you run `make deploy-zk`.
+- Cyfrin Web3 Course  
+- Foundry Toolkit  
+- Ethereum Ecosystem  
 
-2. Connect your [metamask](https://metamask.io/) to your local zkSync blockchain.
+---
 
-> [IMPORTANT] **PLEASE USE A METAMASK ACCOUNT THAT ISNT ASSOCIATED WITH ANY REAL MONEY.**
-> I usually use a few different browser profiles to separate my Metamasks easily.
+## 🚀 Next Improvements
 
-Import the `DEFAULT_ZKSYNC_LOCAL_KEY` from the `Makefile` of the `foundry-fund-me-f23` repo and [import it into your metamask.](https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-Account)
-
-Additionally, add your zkSync node with chainid `260` to your metamask.
-
-3. Refresh the front end, input an amount in the text box, and hit `fund` button after connecting
-
-# Thank you!
-
-If you appreciated this, feel free to follow me or donate!
-
-ETH/Arbitrum/Optimism/Polygon/etc Address: 0x9680201d9c93d65a3603d2088d125e955c73BD65
-
-[![Patrick Collins Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/PatrickAlphaC)
-[![Patrick Collins YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/channel/UCn-3f8tw_E1jZvhuHatROwA)
-[![Patrick Collins Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/patrickalphac/)
-[![Patrick Collins Medium](https://img.shields.io/badge/Medium-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@patrick.collins_58673/)
+- Add transaction status UI (loading/success/error)  
+- Display wallet balance  
+- Improve UI with React + Tailwind  
+- Deploy to Sepolia testnet  
